@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/*
+ * This function takes two linked lists representing two non-negative integers. 
+ * The digits are stored in reverse order, with each node containing a single digit.
+ * It adds the two numbers and returns the sum as a linked list, also in reverse order.
+ * 
+ * Example:
+ * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+ * Output: 7 -> 0 -> 8
+ */
+
+//Definition for singly-linked list.
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    struct ListNode *mainHead = NULL, *tail = NULL;
+    int carry = 0;
+
+    while (l1 != NULL || l2 != NULL || carry != 0) {
+        int sum = carry;
+        if (l1 != NULL) {
+            sum += l1->val;
+            l1 = l1->next;
+        }
+        if (l2 != NULL) {
+            sum += l2->val;
+            l2 = l2->next;
+        }
+
+        struct ListNode* newNode = (struct ListNode *)malloc(sizeof(struct ListNode));
+        newNode->val = sum % 10;
+        newNode->next = NULL;
+        carry = sum / 10;
+
+        if (mainHead == NULL) {
+            mainHead = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    return mainHead;
+}
+
+// Function to print the linked list
+void printList(struct ListNode* head) {
+    struct ListNode* temp = head;
+    while (temp != NULL) {
+        printf("%d", temp->val);
+        if (temp->next != NULL) {
+            printf(" -> ");
+        }
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+// Function to create a new linked list from an array of digits
+struct ListNode* createList(int size) {
+    struct ListNode* head = NULL;
+    struct ListNode* tail = NULL;
+    int val;
+
+    for (int i = 0; i < size; i++) {
+        printf("Enter digit %d: ", i + 1);
+        scanf("%d", &val);
+
+        struct ListNode* newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
+        newNode->val = val;
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    return head;
+}
+
+int main() {
+    int size1, size2;
+
+    printf("Enter the number of digits for the first number: ");
+    scanf("%d", &size1);
+    struct ListNode* l1 = createList(size1);
+
+    printf("Enter the number of digits for the second number: ");
+    scanf("%d", &size2);
+    struct ListNode* l2 = createList(size2);
+
+    // Call the addTwoNumbers function
+    struct ListNode* result = addTwoNumbers(l1, l2);
+
+    printf("Sum: ");
+    printList(result);
+
+    return 0;
+}
