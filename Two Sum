@@ -1,0 +1,48 @@
+/**
+ * This is a solution for the "Two Sum" problem.
+ * Given an array of integers and a target value, 
+ * the goal is to find two indices in the array such that 
+ * their values add up to the target value.
+ * The solution returns the indices of the two numbers 
+ * that add up to the target.
+ */
+
+import java.util.Scanner;
+
+class Solution {
+
+    public int[] twoSum(int[] nums, int target) {
+        int[] result = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    result[0] = i;
+                    result[1] = j;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the number of elements in the array:");
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        System.out.println("Enter the elements of the array:");
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        System.out.println("Enter the target value:");
+        int target = scanner.nextInt();
+
+        Solution solution = new Solution();
+        int[] result = solution.twoSum(nums, target);
+
+        System.out.println("Indices of the two numbers that add up to the target:");
+        System.out.println("Index 1: " + result[0] + ", Index 2: " + result[1]);
+    }
+}
