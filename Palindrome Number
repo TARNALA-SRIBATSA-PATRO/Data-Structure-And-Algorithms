@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+class Solution {
+    public boolean isPalindrome(int x) {
+        // If the number is negative, it cannot be a palindrome
+        if (x < 0) {
+            return false;
+        }
+
+        int rev = 0, oN = x;
+        // Reverse the number
+        while (oN != 0) {
+            rev = rev * 10 + oN % 10;
+            oN /= 10;
+        }
+
+        // Return true if the reversed number equals the original number
+        return rev == x;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter a number: ");
+        int x = scanner.nextInt();
+        
+        Solution solution = new Solution();
+        boolean result = solution.isPalindrome(x);
+        
+        if (result) {
+            System.out.println(x + " is a palindrome.");
+        } else {
+            System.out.println(x + " is not a palindrome.");
+        }
+        
+        scanner.close();
+    }
+}
