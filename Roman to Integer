@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+class Solution {
+
+    private static int iVal(char c) {
+        switch (c) {
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+        }
+        return 0; // Default case if input is invalid
+    }
+
+    public int romanToInt(String s) {
+        int result = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int currentVal = iVal(s.charAt(i));
+          
+            // If the current value is less than the next one, subtract it (e.g., IV or IX)
+            if (i < s.length() - 1 && currentVal < iVal(s.charAt(i + 1))) {
+                result -= currentVal; 
+            } else {
+                result += currentVal; 
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        Solution solution = new Solution();
+        
+        System.out.print("Enter a Roman numeral: ");
+        String romanNumeral = scanner.nextLine();
+        
+        int result = solution.romanToInt(romanNumeral);
+        System.out.println("The integer value of the Roman numeral " + romanNumeral + " is: " + result);
+        
+        scanner.close();
+    }
+}
